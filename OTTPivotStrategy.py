@@ -48,7 +48,7 @@ class OTTPivotStrategy(IStrategy):
         dataframe['DD'] = dataframe['dd1'].rolling(window=9).sum()
         dataframe['CMO'] = ((dataframe['UD'] - dataframe['DD']) / (dataframe['UD'] + dataframe['DD'])).fillna(0).abs()
 
-        dataframe['Var'] = ta.EMA(dataframe['CMO'] * dataframe['close'], length)
+        dataframe['Var'] = ta.EMA(dataframe['CMO'] * dataframe['close'], int(length))
         dataframe['fark'] = dataframe['Var'] * percent * 0.01
         dataframe['OTT'] = np.where(dataframe['close'] > dataframe['Var'], dataframe['Var'] + dataframe['fark'], dataframe['Var'] - dataframe['fark'])
 
