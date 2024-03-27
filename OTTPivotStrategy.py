@@ -15,10 +15,6 @@ class OTTPivotStrategy(IStrategy):
     ott_percent = DecimalParameter(0.5, 0.9, default=0.7, space='buy')
     pivot_lookback = IntParameter(3, 14, default=7, space='buy')
 
-    # Hyperopt parameters for sell signals
-    ott_length_sell = IntParameter(10, 30, default=21, space='sell')
-    ott_percent_sell = DecimalParameter(0.5, 0.9, default=0.7, space='sell')
-    pivot_lookback_sell = IntParameter(3, 14, default=7, space='sell')
 
     def informative_pairs(self):
         return []
@@ -71,7 +67,7 @@ class OTTPivotStrategy(IStrategy):
     def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe.loc[
             (
-                (dataframe['close'] < dataframe['OTT_sell']) |
+                (dataframe['close'] < dataframe['OTT']) |
                 (dataframe['close'] < dataframe['S1'])
             ),
             'sell'] = 1
